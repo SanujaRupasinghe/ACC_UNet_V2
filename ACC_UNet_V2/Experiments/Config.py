@@ -23,7 +23,8 @@ n_filts = 32            # change this to train larger ACC-UNet model
 cosineLR = True         # whether use cosineLR or not
 n_channels = 3
 n_labels = 1
-epochs = 1000
+# epochs = 1000
+epochs = 5
 img_size = 224
 print_frequency = 1
 save_frequency = 100
@@ -41,11 +42,11 @@ task_name = 'ISIC18_exp1'
 
 
 learning_rate = 1e-3
-batch_size = 12
+batch_size = 12//2
 
-# model_name = 'ACC_UNet_Lite'
+model_name = 'ACC_UNet_Lite'
 # model_name = 'ACC_UNet_W'
-model_name = 'ACC_UNet'
+# model_name = 'ACC_UNet'
 #model_name = 'SwinUnet'     # need pretrained checkpoint read readme.md
 #model_name = 'SMESwinUnet'     # need pretrained checkpoint read readme.md
 #model_name = 'UCTransNet'
@@ -57,11 +58,11 @@ model_name = 'ACC_UNet'
 test_session = "session"         
 
 
-train_dataset = './datasets/'+ task_name+ '/Train_Folder/'
-val_dataset = './datasets/'+ task_name+ '/Val_Folder/'
-test_dataset = './datasets/'+ task_name+ '/Test_Folder/'
+train_dataset = 'ACC_UNet_V2/ACC_UNet_V2/Experiments/datasets/'+ task_name+ '/Train_Folder/'
+val_dataset = 'ACC_UNet_V2/ACC_UNet_V2/Experiments/datasets/'+ task_name+ '/Val_Folder/'
+test_dataset = 'ACC_UNet_V2/ACC_UNet_V2/Experiments/datasets/'+ task_name+ '/Test_Folder/'
 session_name       = 'session'  #time.strftime('%m.%d_%Hh%M')
-save_path          = task_name +'/'+ model_name +'/' + session_name + '/'
+save_path          = 'ACC_UNet_V2/ACC_UNet_V2/Experiments/' + task_name +'/'+ model_name +'/' + session_name + '/'
 model_path         = save_path + 'models/'
 tensorboard_folder = save_path + 'tensorboard_logs/'
 logger_path        = save_path + session_name + ".log"

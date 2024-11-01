@@ -23,6 +23,7 @@ from nets.UNet_base import UNet_base
 from nets.SMESwinUnet import SMESwinUnet
 from nets.MResUNet1 import MultiResUnet
 from nets.SwinUnet import SwinUnet
+from nets.ACC_UNet_Lite import ACC_UNet_Lite
 
 import json
 from utils import *
@@ -108,7 +109,7 @@ if __name__ == '__main__':
     elif config.task_name =="ISIC18_exp1":
         test_num = 518
         model_type = config.model_name
-        model_path = "./ISIC18_exp1/"+model_type+"/"+test_session+"/models/best_model-"+model_type+".pth.tar"
+        model_path = "ACC_UNet_V2/ACC_UNet_V2/Experiments/ISIC18_exp1/"+model_type+"/"+test_session+"/models/best_model-"+model_type+".pth.tar"
 
     elif config.task_name =="ISIC18_exp2":
         test_num = 518
@@ -203,6 +204,10 @@ if __name__ == '__main__':
         model = SMESwinUnet(n_channels=config.n_channels,n_classes=config.n_labels)
         model.load_from()
 
+    elif model_type == 'ACC_UNet_Lite':            
+        config_vit = config.get_CTranS_config()   
+        model = ACC_UNet_Lite(n_channels=config.n_channels,n_classes=config.n_labels,n_filts=config.n_filts)
+        
     elif model_type.split('_')[0] == 'MultiResUnet1':          
         model = MultiResUnet(n_channels=config.n_channels,n_classes=config.n_labels,nfilt=int(model_type.split('_')[1]), alpha=float(model_type.split('_')[2]))
     

@@ -118,8 +118,8 @@ class ImageToImage2D(Dataset):
     def __init__(self, dataset_path: str, joint_transform: Callable = None, one_hot_mask: int = False, image_size: int =224, n_labels: int=1) -> None:
         self.dataset_path = dataset_path
         self.image_size = image_size        
-        self.input_path = os.path.join(dataset_path, 'img')
-        self.output_path = os.path.join(dataset_path, 'labelcol')
+        self.input_path = os.path.join(dataset_path, 'img', 'img')
+        self.output_path = os.path.join(dataset_path, 'labelcol', 'labelcol')
         self.images_list = os.listdir(self.input_path)
         self.one_hot_mask = one_hot_mask
         self.n_labels = n_labels
@@ -144,7 +144,18 @@ class ImageToImage2D(Dataset):
         image = cv2.imread(os.path.join(self.input_path, image_filename))
         # print("img",image_filename)
         # print("1",image.shape)
+
+        # do not load .ipynb_checkpoints like hidden files
+        if '.ipynb_checkpoints' in image_filename:
+            return self.__getitem__(np.random.randint(0, len(self.images_list)))
+
+
         image = cv2.resize(image,(self.image_size,self.image_size))
+
+        if image is None:
+            raise FileNotFoundError(f"Image not found or could not be loaded: {image_filename}")
+        
+        
         # print(np.max(image), np.min(image))
         # print("2",image.shape)
         # read mask image
